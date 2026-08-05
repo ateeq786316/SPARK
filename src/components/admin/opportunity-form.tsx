@@ -33,6 +33,7 @@ type Props = {
   submitLabel: string;
   successMessage: string;
   backHref: string;
+  imageUploader?: (file: File, folder: string) => Promise<string>;
 };
 
 export function OpportunityForm({
@@ -44,6 +45,7 @@ export function OpportunityForm({
   submitLabel,
   successMessage,
   backHref,
+  imageUploader,
 }: Props) {
   const router = useRouter();
   const [type, setType] = useState<OpportunityType>(initial?.type ?? "scholarship");
@@ -217,7 +219,7 @@ export function OpportunityForm({
 
       <div className="space-y-2">
         <label className="text-sm font-medium">Featured image</label>
-        <ImageUpload value={featuredImage} onChange={setFeaturedImage} folder="opportunities" />
+        <ImageUpload value={featuredImage} onChange={setFeaturedImage} folder="opportunities" uploader={imageUploader} />
         <input
           value={featuredImage}
           onChange={(e) => setFeaturedImage(e.target.value)}

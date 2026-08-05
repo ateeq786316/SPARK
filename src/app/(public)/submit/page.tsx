@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { submitOpportunity } from "@/lib/db/submissions";
 import { OpportunityForm } from "@/components/admin/opportunity-form";
+import { uploadPublicImage } from "@/lib/db/upload-action";
 
 export default async function SubmitPage() {
   const supabase = await createClient();
@@ -26,6 +27,7 @@ export default async function SubmitPage() {
         submitLabel="Submit for review"
         successMessage="Thanks! Your submission is now pending admin approval."
         backHref="/opportunities"
+        imageUploader={uploadPublicImage}
       />
     </div>
   );

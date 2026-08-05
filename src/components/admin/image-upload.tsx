@@ -8,10 +8,12 @@ export function ImageUpload({
   value,
   onChange,
   folder,
+  uploader,
 }: {
   value: string;
   onChange: (url: string) => void;
   folder: string;
+  uploader?: (file: File, folder: string) => Promise<string>;
 }) {
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -22,8 +24,8 @@ export function ImageUpload({
     setPending(true);
     setError(null);
     try {
-      const { uploadAdminImage } = await import("@/lib/db/upload-action");
-      const url = await uploadAdminImage(file, folder);
+      const upload = uploader ?? (await import("@/lib/db/upload-action")).uploadAdminImage;
+      const url = await upload(file, folder);
       onChange(url);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Upload failed.");
