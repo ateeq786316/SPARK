@@ -47,6 +47,7 @@ function toOpportunityRow(input: OpportunityInput, userId: string, status: "draf
     country: input.country ?? null,
     deadline: input.deadline ?? null,
     source_url: input.source_url ?? null,
+    featured_image: input.featured_image ?? null,
     fields: input.fields as unknown as Json,
     featured: input.featured,
     submitter_id: userId,

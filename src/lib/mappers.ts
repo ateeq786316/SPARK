@@ -17,6 +17,7 @@ export function mapOpportunity(row: OpportunityRow): Opportunity {
     sourceUrl: row.source_url,
     fields: (row.fields ?? {}) as Record<string, unknown>,
     featured: row.featured,
+    featuredImage: row.featured_image,
     viewCount: row.view_count,
     verifiedBy: row.verified_by,
     verifiedAt: row.verified_at,

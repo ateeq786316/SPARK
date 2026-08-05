@@ -134,6 +134,7 @@ export default async function OpportunityDetailPage({
       <div className="mb-8 overflow-hidden rounded-2xl border bg-card">
         <div className="relative aspect-[21/9] bg-muted">
           <MediaFrame
+            src={opportunity.featuredImage}
             alt={opportunity.title}
             sizes="(min-width: 1024px) 56rem, 100vw"
             className="object-cover"

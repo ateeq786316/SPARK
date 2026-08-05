@@ -7,6 +7,7 @@ import { OPPORTUNITY_TYPE_LABELS } from "@/lib/labels";
 import { FIELD_LABELS } from "@/lib/field-labels";
 import { opportunitySchema, type OpportunityInput } from "@/lib/validators/opportunity";
 import type { AdminResult } from "@/lib/db/admin-actions";
+import { ImageUpload } from "@/components/admin/image-upload";
 
 const TYPES = Object.keys(OPPORTUNITY_TYPE_LABELS) as OpportunityType[];
 const ARRAY_FIELDS = new Set(["required_documents", "skills"]);
@@ -64,6 +65,7 @@ export function OpportunityForm({
     source_url: initial?.source_url ?? "",
   });
   const [featured, setFeatured] = useState(initial?.featured ?? false);
+  const [featuredImage, setFeaturedImage] = useState(initial?.featured_image ?? "");
   const [status, setStatus] = useState<"draft" | "published">(initialStatus);
   const [errors, setErrors] = useState<string[]>([]);
   const [result, setResult] = useState<{ kind: "ok" } | { kind: "error"; message: string } | { kind: "duplicate" } | null>(null);
@@ -105,6 +107,7 @@ export function OpportunityForm({
       country: base.country || undefined,
       deadline: base.deadline || undefined,
       source_url: base.source_url || undefined,
+      featured_image: featuredImage || undefined,
       featured,
       fields: Object.fromEntries(
         Object.keys(FIELD_LABELS[type]).map((key) => {
@@ -211,6 +214,17 @@ export function OpportunityForm({
         />
         Featured on the homepage
       </label>
+
+      <div className="space-y-2">
+        <label className="text-sm font-medium">Featured image</label>
+        <ImageUpload value={featuredImage} onChange={setFeaturedImage} folder="opportunities" />
+        <input
+          value={featuredImage}
+          onChange={(e) => setFeaturedImage(e.target.value)}
+          placeholder="…or paste an image URL"
+          className="w-full rounded-lg border border-input bg-background px-3 py-2 text-sm"
+        />
+      </div>
 
       {statusControl ? (
         <div className="space-y-2">

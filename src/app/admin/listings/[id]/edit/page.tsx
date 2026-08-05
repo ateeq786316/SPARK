@@ -28,6 +28,7 @@ export default async function EditListingPage({
     country: data.country ?? undefined,
     deadline: data.deadline ?? undefined,
     source_url: data.source_url ?? undefined,
+    featured_image: data.featured_image ?? undefined,
     featured: data.featured,
     fields: data.fields as unknown as OpportunityInput["fields"],
   };

@@ -87,6 +87,7 @@ const baseFields = {
   country: z.string().optional(),
   deadline: z.string().optional(),
   source_url: z.string().url("Must be a valid URL").optional(),
+  featured_image: z.string().optional(),
   featured: z.boolean().default(false),
 };
 

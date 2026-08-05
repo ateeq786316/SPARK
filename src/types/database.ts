@@ -238,6 +238,7 @@ export type Database = {
           created_at: string
           deadline: string | null
           featured: boolean
+          featured_image: string | null
           fields: Json
           id: string
           search_vector: unknown
@@ -258,6 +259,7 @@ export type Database = {
           created_at?: string
           deadline?: string | null
           featured?: boolean
+          featured_image?: string | null
           fields?: Json
           id?: string
           search_vector?: unknown
@@ -278,6 +280,7 @@ export type Database = {
           created_at?: string
           deadline?: string | null
           featured?: boolean
+          featured_image?: string | null
           fields?: Json
           id?: string
           search_vector?: unknown

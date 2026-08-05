@@ -14,6 +14,7 @@ export function ListingCard({ opportunity }: { opportunity: Opportunity }) {
       <article className="overflow-hidden rounded-xl border bg-card transition-shadow group-hover:shadow-md group-focus-visible:shadow-md">
         <div className="relative aspect-[16/9] overflow-hidden bg-muted">
           <MediaFrame
+            src={opportunity.featuredImage}
             alt=""
             sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
             className="object-cover transition-transform duration-500 group-hover:scale-105"

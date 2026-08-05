@@ -56,6 +56,7 @@ export interface Opportunity {
   sourceUrl: string | null;
   fields: Record<string, unknown>;
   featured: boolean;
+  featuredImage: string | null;
   viewCount: number;
   verifiedBy: string | null;
   verifiedAt: string | null;
