@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRightIcon } from "@/components/ui/icons";
 import { createPublicClient } from "@/lib/supabase/public";
 import { mapBlogArticle, mapOpportunity } from "@/lib/mappers";
+import { getSiteSettings } from "@/lib/db/site-settings";
 import { Hero } from "@/components/features/hero";
 import { ListingCard } from "@/components/features/listing-card";
 import { ArticleCard } from "@/components/features/article-card";
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
 async function getHomeData() {
   const supabase = createPublicClient();
 
-  const [{ data: featured }, { data: latest }, { data: storyCategory }] =
+  const [{ data: featured }, { data: latest }, { data: storyCategory }, settings] =
     await Promise.all([
       supabase
         .from("opportunities")
@@ -39,6 +40,7 @@ async function getHomeData() {
         .select("id")
         .eq("name", "Success Stories")
         .single(),
+      getSiteSettings(),
     ]);
 
   let stories: ReturnType<typeof mapBlogArticle>[] = [];
@@ -57,15 +59,16 @@ async function getHomeData() {
     featured: (featured ?? []).map(mapOpportunity),
     latest: (latest ?? []).map(mapOpportunity),
     stories,
+    heroImageUrl: settings.hero_image_url,
   };
 }
 
 export default async function HomePage() {
-  const { featured, latest, stories } = await getHomeData();
+  const { featured, latest, stories, heroImageUrl } = await getHomeData();
 
   return (
     <>
-      <Hero />
+      <Hero heroImageUrl={heroImageUrl} />
 
       <section className="mx-auto max-w-6xl px-4 pb-20 sm:px-6">
         <div className="mb-8 flex items-end justify-between gap-4">

@@ -332,3 +332,17 @@ export async function broadcastNewsletter(
   revalidatePath("/admin/email");
   return { ok: true, id: undefined, message: `Sent to ${sent} of ${emails.length}.` + (errors.length ? ` Errors: ${errors.join("; ")}` : "") };
 }
+
+export async function upsertSiteSetting(
+  key: string,
+  value: string | null
+): Promise<AdminResult> {
+  const { admin } = await requireAdmin();
+  const { error } = await admin
+    .from("site_settings")
+    .upsert({ key, value: value ?? null });
+  if (error) return { ok: false, reason: "error", message: error.message };
+  revalidatePath("/");
+  revalidatePath("/admin/site-assets");
+  return { ok: true, id: key };
+}

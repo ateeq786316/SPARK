@@ -9,10 +9,13 @@ import {
 } from "@phosphor-icons/react";
 import { SearchBar } from "@/components/features/search-bar";
 import { HeroIllustration } from "@/components/features/hero-illustration";
+import { MediaFrame } from "@/components/ui/media-frame";
 
 const ease = [0.21, 0.47, 0.32, 0.98] as const;
 
-export function Hero() {
+type HeroProps = { heroImageUrl?: string | null };
+
+export function Hero({ heroImageUrl }: HeroProps) {
   const router = useRouter();
   const reduce = useReducedMotion() ?? false;
 
@@ -88,7 +91,18 @@ export function Hero() {
           {...fadeUp(0.25)}
           className="relative hidden lg:block"
         >
-          <HeroIllustration />
+          {heroImageUrl ? (
+            <div className="relative aspect-[4/5] w-full max-w-sm overflow-hidden rounded-2xl border shadow-lg">
+              <MediaFrame
+                src={heroImageUrl}
+                alt="Site hero"
+                sizes="320px"
+                className="object-cover"
+              />
+            </div>
+          ) : (
+            <HeroIllustration />
+          )}
         </motion.div>
       </div>
     </section>

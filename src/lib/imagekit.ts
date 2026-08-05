@@ -2,6 +2,7 @@ import "server-only";
 import { serverEnv } from "@/lib/env.server";
 
 const IMAGEKIT_ENDPOINT = "https://upload.imagekit.io/api/v1/files/upload";
+const IMAGEKIT_API = "https://api.imagekit.io/v1/files";
 
 export interface ImagekitUploadResult {
   fileId: string;
@@ -73,4 +74,58 @@ export async function uploadImageToImageKit(
     name: data.name ?? fileName,
     size: data.size ?? file.size,
   };
+}
+
+export interface ImagekitFile {
+  fileId: string;
+  name: string;
+  filePath: string;
+  url: string;
+  thumbnail: string;
+  size: number;
+  height?: number;
+  width?: number;
+  tags?: string[];
+  createdAt: number;
+}
+
+function ikAuth() {
+  return "Basic " + Buffer.from(`${serverEnv.IMAGEKIT_PRIVATE_KEY}:`, "utf8").toString("base64");
+}
+
+export async function listImagekitFiles(opts?: {
+  folder?: string;
+  search?: string;
+  page?: number;
+  limit?: number;
+}): Promise<ImagekitFile[]> {
+  const params = new URLSearchParams();
+  if (opts?.folder) params.set("path", opts.folder);
+  if (opts?.limit) params.set("limit", String(opts.limit));
+  if (opts?.page) params.set("page", String(opts.page));
+  const qs = params.toString();
+  const res = await fetch(`${IMAGEKIT_API}${qs ? `?${qs}` : ""}`, {
+    headers: { Authorization: ikAuth() },
+  });
+  if (!res.ok) {
+    const txt = await res.text().catch(() => "");
+    throw new Error(`ImageKit list failed (${res.status}): ${res.statusText}${txt ? ` — ${txt}` : ""}`);
+  }
+  const data: ImagekitFile[] = await res.json();
+  const needle = opts?.search?.toLowerCase().trim();
+  const filtered = needle
+    ? data.filter((f) => `${f.name} ${f.filePath}`.toLowerCase().includes(needle))
+    : data;
+  return filtered;
+}
+
+export async function deleteImagekitFile(fileId: string): Promise<void> {
+  const res = await fetch(`${IMAGEKIT_API}/${fileId}`, {
+    method: "DELETE",
+    headers: { Authorization: ikAuth() },
+  });
+  if (!res.ok) {
+    const txt = await res.text().catch(() => "");
+    throw new Error(`ImageKit delete failed (${res.status}): ${res.statusText}${txt ? ` — ${txt}` : ""}`);
+  }
 }

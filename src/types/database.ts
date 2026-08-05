@@ -39,6 +39,24 @@ export type Database = {
   }
   public: {
     Tables: {
+      site_settings: {
+        Row: {
+          key: string
+          value: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          key: string
+          value?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          key?: string
+          value?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       application_records: {
         Row: {
           applied_at: string
