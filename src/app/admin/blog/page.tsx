@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { formatDate } from "@/lib/labels";
 import { PlusIcon } from "@/components/ui/icons";
@@ -52,11 +53,15 @@ export default async function AdminBlogPage() {
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-3">
                       {article.featured_image ? (
-                        <img
-                          src={article.featured_image}
-                          alt=""
-                          className="h-9 w-14 rounded object-cover"
-                        />
+                        <div className="relative h-9 w-14 shrink-0 overflow-hidden rounded">
+                          <Image
+                            src={article.featured_image}
+                            alt=""
+                            fill
+                            sizes="56px"
+                            className="object-cover"
+                          />
+                        </div>
                       ) : null}
                       <span className="font-medium">{article.title}</span>
                     </div>

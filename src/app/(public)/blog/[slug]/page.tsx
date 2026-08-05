@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeftIcon, CalendarBlankIcon, UserCircleIcon } from "@/components/ui/icons";
 import { createPublicClient } from "@/lib/supabase/public";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { mapBlogArticle } from "@/lib/mappers";
+import { markdownToHtml } from "@/lib/markdown";
 import { formatDate } from "@/lib/labels";
 import { Badge } from "@/components/ui/badge";
+import { MediaFrame } from "@/components/ui/media-frame";
 import { RelatedPosts } from "@/components/features/related-posts";
 import { Reveal } from "@/components/ui/motion";
 
@@ -53,13 +54,6 @@ export async function generateMetadata({
   };
 }
 
-function paragraphs(content: string) {
-  return content
-    .split(/\n\s*\n/)
-    .map((block) => block.trim())
-    .filter(Boolean);
-}
-
 export default async function ArticlePage({
   params,
 }: {
@@ -78,9 +72,6 @@ export default async function ArticlePage({
   if (error || !data) notFound();
 
   const article = mapBlogArticle(data);
-  const image =
-    article.featuredImage ??
-    `https://picsum.photos/seed/${article.slug}/1200/600`;
 
   const [authorRes, categoryRes] = await Promise.all([
     article.authorId
@@ -125,11 +116,9 @@ export default async function ArticlePage({
           </h1>
 
           <div className="relative aspect-[21/9] overflow-hidden rounded-2xl bg-muted">
-            <Image
-              src={image}
-              alt=""
-              fill
-              priority
+            <MediaFrame
+              src={article.featuredImage ?? null}
+              alt={article.title}
               sizes="(min-width: 768px) 48rem, 100vw"
               className="object-cover"
             />
@@ -137,10 +126,11 @@ export default async function ArticlePage({
         </div>
       </Reveal>
 
-      <Reveal className="mt-8 space-y-5 text-[17px] leading-relaxed text-foreground/90">
-        {paragraphs(article.content).map((paragraph, index) => (
-          <p key={index}>{paragraph}</p>
-        ))}
+      <Reveal className="mt-8">
+        <div
+          className="prose prose-lg max-w-none"
+          dangerouslySetInnerHTML={{ __html: markdownToHtml(article.content ?? "") }}
+        />
       </Reveal>
 
       <RelatedPosts postIds={article.relatedPosts} />

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import {
   ArrowLeftIcon,
@@ -15,6 +14,7 @@ import { mapOpportunity } from "@/lib/mappers";
 import { FIELD_LABELS } from "@/lib/field-labels";
 import { typeLabel, formatDeadline, formatDate, isExpired } from "@/lib/labels";
 import { Badge } from "@/components/ui/badge";
+import { MediaFrame } from "@/components/ui/media-frame";
 import { ListingActions } from "@/components/features/listing-actions";
 import { SimilarOpportunities } from "@/components/features/similar-opportunities";
 import type { OpportunityType } from "@/types";
@@ -133,11 +133,8 @@ export default async function OpportunityDetailPage({
 
       <div className="mb-8 overflow-hidden rounded-2xl border bg-card">
         <div className="relative aspect-[21/9] bg-muted">
-          <Image
-            src={`https://picsum.photos/seed/${opportunity.slug}/1200/500`}
-            alt=""
-            fill
-            priority
+          <MediaFrame
+            alt={opportunity.title}
             sizes="(min-width: 1024px) 56rem, 100vw"
             className="object-cover"
           />

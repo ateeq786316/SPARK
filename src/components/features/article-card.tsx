@@ -1,14 +1,10 @@
 import Link from "next/link";
-import Image from "next/image";
 import { CalendarBlankIcon } from "@/components/ui/icons";
 import { formatDate } from "@/lib/labels";
 import type { BlogArticle } from "@/types";
+import { MediaFrame } from "@/components/ui/media-frame";
 
 export function ArticleCard({ article }: { article: BlogArticle }) {
-  const image =
-    article.featuredImage ??
-    `https://picsum.photos/seed/${article.slug}/640/360`;
-
   return (
     <Link
       href={`/blog/${article.slug}`}
@@ -16,10 +12,9 @@ export function ArticleCard({ article }: { article: BlogArticle }) {
     >
       <article className="overflow-hidden rounded-xl border bg-card transition-shadow group-hover:shadow-md group-focus-visible:shadow-md">
         <div className="relative aspect-[16/9] overflow-hidden bg-muted">
-          <Image
-            src={image}
+          <MediaFrame
+            src={article.featuredImage}
             alt={article.title}
-            fill
             sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
             className="object-cover transition-transform duration-500 group-hover:scale-105"
           />

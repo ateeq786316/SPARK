@@ -1,9 +1,9 @@
 import Link from "next/link";
-import Image from "next/image";
 import { CalendarBlankIcon, MapPinIcon } from "@/components/ui/icons";
 import { Badge } from "@/components/ui/badge";
 import { typeLabel, formatDeadline } from "@/lib/labels";
 import type { Opportunity } from "@/types";
+import { MediaFrame } from "@/components/ui/media-frame";
 
 export function ListingCard({ opportunity }: { opportunity: Opportunity }) {
   return (
@@ -13,10 +13,8 @@ export function ListingCard({ opportunity }: { opportunity: Opportunity }) {
     >
       <article className="overflow-hidden rounded-xl border bg-card transition-shadow group-hover:shadow-md group-focus-visible:shadow-md">
         <div className="relative aspect-[16/9] overflow-hidden bg-muted">
-          <Image
-            src={`https://picsum.photos/seed/${opportunity.slug}/640/360`}
+          <MediaFrame
             alt=""
-            fill
             sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
             className="object-cover transition-transform duration-500 group-hover:scale-105"
           />

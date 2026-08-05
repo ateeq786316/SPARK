@@ -18,6 +18,11 @@ const serverEnvSchema = z.object({
       "Must be an email address or \"Name <email@domain.com>\""
     ),
   SMTP_DAILY_QUOTA: z.coerce.number().int().positive().optional(),
+  IMAGEKIT_ID: z.string().min(1),
+  IMAGEKIT_URL_ENDPOINT: z.string().url(),
+  IMAGEKIT_PRIVATE_KEY: z.string().min(1),
+  IMAGEKIT_PUBLIC_KEY: z.string().min(1),
+  CRON_SECRET: z.string().min(1),
 });
 
 const parsed = serverEnvSchema.safeParse({
@@ -28,6 +33,11 @@ const parsed = serverEnvSchema.safeParse({
   SMTP_PASS: process.env.SMTP_PASS,
   SMTP_FROM_EMAIL: process.env.SMTP_FROM_EMAIL,
   SMTP_DAILY_QUOTA: process.env.SMTP_DAILY_QUOTA ?? "400",
+  IMAGEKIT_ID: process.env.IMAGEKIT_ID,
+  IMAGEKIT_URL_ENDPOINT: process.env.IMAGEKIT_URL_ENDPOINT,
+  IMAGEKIT_PRIVATE_KEY: process.env.IMAGEKIT_PRIVATE_KEY,
+  IMAGEKIT_PUBLIC_KEY: process.env.IMAGEKIT_PUBLIC_KEY,
+  CRON_SECRET: process.env.CRON_SECRET ?? crypto.randomUUID(),
 });
 
 if (!parsed.success) {

@@ -11,9 +11,12 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { navLinks } from "@/lib/nav";
 
-export function MobileNav() {
+export function MobileNav({
+  navLinks,
+}: {
+  navLinks: { href: string; label: string }[];
+}) {
   const [open, setOpen] = useState(false);
 
   return (

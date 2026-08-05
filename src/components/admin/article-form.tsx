@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import type { ArticleInput } from "@/lib/db/admin-actions";
 import type { AdminResult } from "@/lib/db/admin-actions";
 import { ImageUpload } from "@/components/admin/image-upload";
+import { MarkdownEditor } from "@/components/admin/markdown-editor";
 
 type Props = {
   action: (id: string | null, input: ArticleInput) => Promise<AdminResult>;
@@ -141,15 +142,14 @@ export function ArticleForm({ action, initial, categories, backHref }: Props) {
 
       <div className="space-y-2">
         <label htmlFor="content" className="text-sm font-medium">
-          Content
+          Content (Markdown)
         </label>
-        <textarea
-          id="content"
+        <MarkdownEditor
           value={content}
-          onChange={(e) => setContent(e.target.value)}
-          rows={12}
-          placeholder="Paragraphs separated by blank lines."
-          className="w-full rounded-lg border border-input bg-background px-3 py-2 text-sm font-mono"
+          onChange={setContent}
+          label="Article content (Markdown)"
+          placeholder="Write your article in Markdown…"
+          rows={14}
         />
       </div>
 

@@ -1,7 +1,6 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import {
   ArrowRightIcon,
@@ -9,6 +8,7 @@ import {
   SparkleIcon,
 } from "@phosphor-icons/react";
 import { SearchBar } from "@/components/features/search-bar";
+import { HeroIllustration } from "@/components/features/hero-illustration";
 
 const ease = [0.21, 0.47, 0.32, 0.98] as const;
 
@@ -84,17 +84,11 @@ export function Hero() {
           </motion.a>
         </div>
 
-        <motion.div {...fadeUp(0.25)} className="relative hidden lg:block">
-          <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border shadow-lg">
-            <Image
-              src="https://picsum.photos/seed/spark-hero/800/1000"
-              alt="Students exploring global opportunities"
-              fill
-              priority
-              sizes="(min-width: 1024px) 40vw, 0px"
-              className="object-cover"
-            />
-          </div>
+        <motion.div
+          {...fadeUp(0.25)}
+          className="relative hidden lg:block"
+        >
+          <HeroIllustration />
         </motion.div>
       </div>
     </section>
