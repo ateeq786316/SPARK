@@ -7,7 +7,8 @@ Local development setup. Everything runs on free tiers only.
 - Node.js 20+ (LTS)
 - Supabase project (free plan) — create at supabase.com
 - Vercel account (free plan) — for deploy
-- Resend account (free plan, ~100 emails/day) — for email
+- Google account with an SMTP App Password (Gmail or Workspace, ~500 emails/day) — for email
+  (create: Google Account → Security → 2-Step Verification ON → App passwords → name `spark`)
 
 ## 1. Install Dependencies
 
@@ -23,11 +24,16 @@ Copy the template and fill in values from your Supabase project:
 # .env.local
 NEXT_PUBLIC_SUPABASE_URL=https://<project-ref>.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=<anon-key>
-RESEND_API_KEY=re_...            # server-only, never expose to client
+SMTP_HOST=smtp.gmail.com          # server-only, never expose to client
+SMTP_PORT=587
+SMTP_USER=you@gmail.com
+SMTP_PASS="abcd efgh ijkl mnop"
+SMTP_FROM_EMAIL="SPARK <you@gmail.com>"
 ```
 
 `NEXT_PUBLIC_*` vars are exposed to the browser; secrets like
-`RESEND_API_KEY` must never be prefixed with `NEXT_PUBLIC_` (G4).
+`SMTP_PASS` and `SUPABASE_SERVICE_ROLE_KEY` must never be prefixed with
+`NEXT_PUBLIC_` (G4).
 
 ## 3. Database
 
@@ -62,8 +68,9 @@ DB to access `/admin`.
 ## 5. Scheduled Email (reminders/digests)
 
 Configure a daily scheduled job (Supabase Edge Function via `pg_cron`,
-or Vercel Cron) that calls `POST /api/email/send`. The send loop stops
-at the free daily quota.
+or Vercel Cron) that calls `POST /api/email/send` with the header
+`x-cron-secret: <CRON_SECRET>`. The send loop stops at the SMTP daily
+quota.
 
 ## Quality Gates (per constitution)
 

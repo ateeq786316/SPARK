@@ -1,4 +1,4 @@
-﻿export type Json =
+export type Json =
   | string
   | number
   | boolean
@@ -301,6 +301,7 @@ export type Database = {
           headline: string | null
           id: string
           interests: string[] | null
+          is_suspended: boolean
           newsletter_opt_in: boolean
           notification_settings: Json
           role: string
@@ -314,6 +315,7 @@ export type Database = {
           headline?: string | null
           id: string
           interests?: string[] | null
+          is_suspended?: boolean
           newsletter_opt_in?: boolean
           notification_settings?: Json
           role?: string
@@ -327,6 +329,7 @@ export type Database = {
           headline?: string | null
           id?: string
           interests?: string[] | null
+          is_suspended?: boolean
           newsletter_opt_in?: boolean
           notification_settings?: Json
           role?: string
@@ -420,6 +423,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      increment_view_count: { Args: { p_slug: string }; Returns: undefined }
       is_admin: { Args: never; Returns: boolean }
       mark_closed_opportunities: { Args: never; Returns: number }
       show_limit: { Args: never; Returns: number }

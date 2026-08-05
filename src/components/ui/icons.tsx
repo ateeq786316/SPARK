@@ -1,0 +1,33 @@
+"use client";
+
+export type { Icon } from "@phosphor-icons/react";
+export {
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  ArrowSquareOutIcon,
+  BookmarkSimpleIcon,
+  CalendarBlankIcon,
+  ChartBarIcon,
+  ChartLineIcon,
+  CheckCircleIcon,
+  CheckIcon,
+  CloudArrowUpIcon,
+  EnvelopeSimpleIcon,
+  FlameIcon,
+  GaugeIcon,
+  GearIcon,
+  ListBulletsIcon,
+  MagnifyingGlassIcon,
+  MapPinIcon,
+  NotePencilIcon,
+  PencilSimpleIcon,
+  PlusIcon,
+  SealCheckIcon,
+  ShieldCheckIcon,
+  SignOutIcon,
+  TrashIcon,
+  UserCircleIcon,
+  UsersIcon,
+  XCircleIcon,
+  XIcon,
+} from "@phosphor-icons/react";

@@ -54,12 +54,33 @@ export async function middleware(request: NextRequest) {
 
     const { data: profile } = await supabase
       .from("profiles")
-      .select("role")
+      .select("role, is_suspended")
       .eq("id", user.id)
       .single();
 
+    if (profile?.is_suspended) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/login";
+      url.searchParams.set("error", "suspended");
+      return NextResponse.redirect(url);
+    }
+
     if (profile?.role !== "admin") {
       return NextResponse.redirect(new URL("/", request.url));
+    }
+  }
+
+  if (requiresAuth && user) {
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("is_suspended")
+      .eq("id", user.id)
+      .single();
+    if (profile?.is_suspended) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/login";
+      url.searchParams.set("error", "suspended");
+      return NextResponse.redirect(url);
     }
   }
 

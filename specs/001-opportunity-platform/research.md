@@ -21,20 +21,25 @@ Technical Context against the free-tier-only constraint.
 
 - **Decision**: Supabase built-in Auth emails (confirmation, password
   reset) are free and used for account emails. Transactional and
-  newsletter emails use a free email API (Resend free tier, ~100
-  emails/day / 3,000/month) called from a Supabase Edge Function
-  scheduled via `pg_cron` (free) or a Vercel Cron route.
+  newsletter emails go through **Google SMTP** (`smtp.gmail.com`, App
+  Password — Gmail or Workspace, ~500 emails/day) via Nodemailer, called
+  from a Supabase Edge Function scheduled via `pg_cron` (free) or a
+  Vercel Cron route.
 - **Rationale**: Meets FR-011 (transactional + newsletters) within free
   quotas; `pg_cron` + Edge Functions live entirely inside Supabase free;
-  the send path is server-side so the API key never reaches the client
-  (G4).
+  the send path is server-side so the SMTP password never reaches the
+  client (G4); Gmail/Workspace ships SPF + DKIM so deliverability is
+  solid without buying a domain.
 - **Alternatives considered**:
   - Brevo free (300/day): higher quota but stronger sending limits per
-    domain; Resend chosen for simpler API + generous free tier.
+    domain.
+  - Resend free (~100/day): simpler API but needs a verified domain + DNS
+    records; swapped for Google SMTP per owner preference.
   - Vercel Cron only: fewer scheduling options on free tier than
     `pg_cron`; kept as an option but not primary.
 - **Quota guard**: digests/broadcasts batch sends and hard-stop at the
-  daily free quota; all sends honor user opt-out (FR-011).
+  daily quota (default 400, under Gmail's ~500/day); all sends honor user
+  opt-out (FR-011).
 
 ## 3. UI Component & Design System Approach
 
@@ -88,7 +93,7 @@ Technical Context against the free-tier-only constraint.
 | # | Area | Decision |
 |---|------|----------|
 | D1 | Search | Postgres FTS + pg_trgm via Supabase SDK |
-| D2 | Email | Supabase Auth email + Resend free (pg_cron/Edge Function) |
+| D2 | Email | Supabase Auth email + Google SMTP (Gmail/Workspace, Nodemailer, pg_cron/Edge Function) |
 | D3 | UI | Tailwind + shadcn/ui (Radix) |
 | D4 | Auth | Supabase Auth + `@supabase/ssr` + middleware route guards |
 | D5 | Moderation | status state machine + `verified_by/verified_at` |

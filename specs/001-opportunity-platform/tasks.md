@@ -29,13 +29,13 @@
 
 **Purpose**: Project initialization and basic structure
 
-- [ ] T001 Create Next.js 15 + TypeScript project (App Router, ESLint, `src/` dir) at repository root
-- [ ] T002 Configure Tailwind CSS v4 (`@tailwindcss/postcss`) with project tokens in `src/app/globals.css`
-- [ ] T003 Install core deps: `motion`, `@phosphor-icons/react`, `zod`, `react-hook-form`, `@supabase/supabase-js`, `@supabase/ssr`
-- [ ] T004 Init shadcn/ui (`npx shadcn@latest init`) with neutral base + one accent color; enable dark mode
-- [ ] T005 [P] Add `next/font` setup (Geist or Satoshi display + mono pairing) in `src/app/layout.tsx`
-- [ ] T006 [P] Configure Vitest + React Testing Library in `vitest.config.ts`
-- [ ] T007 [P] Create `.env.local` template and `src/lib/env.ts` for typed env access (secrets server-only)
+- [x] T001 Create Next.js 15 + TypeScript project (App Router, ESLint, `src/` dir) at repository root
+- [x] T002 Configure Tailwind CSS v4 (`@tailwindcss/postcss`) with project tokens in `src/app/globals.css`
+- [x] T003 Install core deps: `motion`, `@phosphor-icons/react`, `zod`, `react-hook-form`, `@supabase/supabase-js`, `@supabase/ssr`
+- [x] T004 Init shadcn/ui (`npx shadcn@latest init`) with neutral base + one accent color; enable dark mode
+- [x] T005 [P] Add `next/font` setup (Geist or Satoshi display + mono pairing) in `src/app/layout.tsx`
+- [x] T006 [P] Configure Vitest + React Testing Library in `vitest.config.ts`
+- [x] T007 [P] Create `.env.local` template and `src/lib/env.ts` for typed env access (secrets server-only)
 
 ---
 
@@ -45,14 +45,14 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T008 Create Supabase migration: tables (`profiles`, `opportunities`, `blog_articles`, `category`, `saved_items`, `application_records`, `submissions`, `events`, `newsletter_subscribers`) + RLS policies (see `contracts/rls.md`) + `is_admin()` helper + GIN/trigram indexes + seed in `supabase/migrations/`
-- [ ] T009 Implement Supabase browser client in `src/lib/supabase/client.ts` and server client in `src/lib/supabase/server.ts` (cookie session via `@supabase/ssr`)
-- [ ] T010 Implement `src/middleware.ts` route guards: refresh session, protect `(dashboard)/**` (auth) and `admin/**` (role = admin)
-- [ ] T011 Create design system foundation in `src/components/ui/`: button, card, input, badge, select, dialog, skeleton, empty-state, toast (shadcn primitives customized, no default state)
-- [ ] T012 Create motion primitives in `src/components/ui/motion/`: `Reveal` (whileInView), `Stagger`, `SpringPress`, all honoring `useReducedMotion()`
-- [ ] T013 Create zod schemas for all 9 opportunity types in `src/lib/validators/opportunity.ts` (field sets from `data-model.md` / spec FR-002)
-- [ ] T014 Create shared types in `src/types/index.ts` (User, Opportunity, BlogArticle, SavedItem, ApplicationRecord, Submission, ActivityMetric, NewsletterSubscriber)
-- [ ] T015 Implement Postgres full-text search helpers in `src/lib/search.ts` (keyword + type + country + open-deadline filters, 2s target)
+- [x] T008 Create Supabase migration: tables (`profiles`, `opportunities`, `blog_articles`, `category`, `saved_items`, `application_records`, `submissions`, `events`, `newsletter_subscribers`) + RLS policies (see `contracts/rls.md`) + `is_admin()` helper + GIN/trigram indexes + seed in `supabase/migrations/`
+- [x] T009 Implement Supabase browser client in `src/lib/supabase/client.ts` and server client in `src/lib/supabase/server.ts` (cookie session via `@supabase/ssr`)
+- [x] T010 Implement `src/middleware.ts` route guards: refresh session, protect `(dashboard)/**` (auth) and `admin/**` (role = admin)
+- [x] T011 Create design system foundation in `src/components/ui/`: button, card, input, badge, select, dialog, skeleton, empty-state, toast (shadcn primitives customized, no default state)
+- [x] T012 Create motion primitives in `src/components/ui/motion/`: `Reveal` (whileInView), `Stagger`, `SpringPress`, all honoring `useReducedMotion()`
+- [x] T013 Create zod schemas for all 9 opportunity types in `src/lib/validators/opportunity.ts` (field sets from `data-model.md` / spec FR-002)
+- [x] T014 Create shared types in `src/types/index.ts` (User, Opportunity, BlogArticle, SavedItem, ApplicationRecord, Submission, ActivityMetric, NewsletterSubscriber)
+- [x] T015 Implement Postgres full-text search helpers in `src/lib/search.ts` (keyword + type + country + open-deadline filters, 2s target)
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -68,21 +68,21 @@
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T016 [P] [US1] Unit test for opportunity validators in `tests/unit/validators.test.ts`
-- [ ] T017 [P] [US1] Integration test for public listing query (anon can only see `published`/`closed`) in `tests/integration/public-listings.test.ts`
+- [x] T016 [P] [US1] Unit test for opportunity validators in `tests/unit/validators.test.ts`
+- [x] T017 [P] [US1] Integration test for public listing query (anon can only see `published`/`closed`) in `tests/integration/public-listings.test.ts`
 
 ### Implementation for User Story 1
 
-- [ ] T018 [P] [US1] Create public route group layout in `src/app/(public)/layout.tsx` with sticky nav (≤80px, single line) + footer (About, Privacy, Terms, Contact, social links, copyright)
-- [ ] T019 [P] [US1] Create home page in `src/app/(public)/page.tsx`: hero (headline "Find Scholarships, Jobs & Opportunities", search bar, animated entrance), featured opportunities (6), latest updates, success stories, newsletter CTA — hero image via `next/image` priority, hero fits viewport
-- [ ] T020 [P] [US1] Create `ListingCard` in `src/components/features/listing-card.tsx` (image, type badge, title, country, deadline, hover state, `next/image`)
-- [ ] T021 [P] [US1] Create `SearchBar` in `src/components/features/search-bar.tsx` (debounced, accessible label, icon button, enter-to-search)
-- [ ] T022 [US1] Create opportunities list page in `src/app/(public)/opportunities/page.tsx` with search/filter (type pills, country, open-deadline) + empty state + skeleton loading
-- [ ] T023 [US1] Create listing detail page in `src/app/(public)/opportunities/[slug]/page.tsx` showing all required fields per type, verified date, and official apply link; closed listings hide apply action
-- [ ] T024 [US1] Implement newsletter subscribe action in `src/app/api/newsletter/route.ts` (explicit consent, `newsletter_subscribers` insert, unsubscribe link support)
-- [ ] T025 [US1] Add scroll-reveal animations (`Reveal`/`Stagger`) to home + listing grid; hero entrance sequence; tactile CTA feedback — all reduced-motion safe
-- [ ] T026 [US1] Add SEO metadata, `sitemap.ts`, `robots.ts`, per-listing structured data
-- [ ] T027 [US1] Create static footer pages: about, privacy, terms, contact in `src/app/(public)/about`, `/privacy`, `/terms`, `/contact`
+- [x] T018 [P] [US1] Create public route group layout in `src/app/(public)/layout.tsx` with sticky nav (≤80px, single line) + footer (About, Privacy, Terms, Contact, social links, copyright)
+- [x] T019 [P] [US1] Create home page in `src/app/(public)/page.tsx`: hero (headline "Find Scholarships, Jobs & Opportunities", search bar, animated entrance), featured opportunities (6), latest updates, success stories, newsletter CTA — hero image via `next/image` priority, hero fits viewport
+- [x] T020 [P] [US1] Create `ListingCard` in `src/components/features/listing-card.tsx` (image, type badge, title, country, deadline, hover state, `next/image`)
+- [x] T021 [P] [US1] Create `SearchBar` in `src/components/features/search-bar.tsx` (debounced, accessible label, icon button, enter-to-search)
+- [x] T022 [US1] Create opportunities list page in `src/app/(public)/opportunities/page.tsx` with search/filter (type pills, country, open-deadline) + empty state + skeleton loading
+- [x] T023 [US1] Create listing detail page in `src/app/(public)/opportunities/[slug]/page.tsx` showing all required fields per type, verified date, and official apply link; closed listings hide apply action
+- [x] T024 [US1] Implement newsletter subscribe action in `src/app/api/newsletter/route.ts` (explicit consent, `newsletter_subscribers` insert, unsubscribe link support)
+- [x] T025 [US1] Add scroll-reveal animations (`Reveal`/`Stagger`) to home + listing grid; hero entrance sequence; tactile CTA feedback — all reduced-motion safe
+- [x] T026 [US1] Add SEO metadata, `sitemap.ts`, `robots.ts`, per-listing structured data
+- [x] T027 [US1] Create static footer pages: about, privacy, terms, contact in `src/app/(public)/about`, `/privacy`, `/terms`, `/contact`
 
 **Checkpoint**: At this point, User Story 1 should be fully functional and testable independently
 
@@ -96,20 +96,20 @@
 
 ### Tests for User Story 2 (OPTIONAL — only if tests requested) ⚠️
 
-- [ ] T028 [P] [US2] Contract test for save/unsave + applied upsert (owner-only via RLS) in `tests/integration/dashboard-actions.test.ts`
+- [x] T028 [P] [US2] Contract test for save/unsave + applied upsert (owner-only via RLS) in `tests/integration/dashboard-actions.test.ts`
 
 ### Implementation for User Story 2
 
-- [ ] T029 [P] [US2] Create auth pages in `src/app/(auth)/login` and `/register` (email/password, confirmation + reset via Supabase Auth, error/loading states, post-login redirect back to originating listing)
-- [ ] T030 [P] [US2] Create profile row on signup (trigger on `auth.users`) and profile type in `src/lib/db/profiles.ts`
-- [ ] T031 [US2] Implement save/unsave server action in `src/lib/db/saved.ts` (upsert, unique per user+opportunity)
-- [ ] T032 [US2] Implement mark-applied server action in `src/lib/db/applied.ts` (idempotent upsert)
-- [ ] T033 [US2] Create dashboard layout in `src/app/(dashboard)/layout.tsx` with sidebar nav (saved, applied, settings) + auth guard
-- [ ] T034 [US2] Create saved page in `src/app/(dashboard)/saved/page.tsx` (list, unsave, closed/deleted states, empty state)
-- [ ] T035 [US2] Create applied page in `src/app/(dashboard)/applied/page.tsx` (list, status, empty state)
-- [ ] T036 [US2] Create settings page in `src/app/(dashboard)/settings/page.tsx` (profile edit + notification settings incl. full email opt-out)
-- [ ] T037 [US2] Implement recommendations query in `src/lib/db/recommendations.ts` (rule-based: interests/saved type + country, published only, exclude saved/applied, ≤6, 2s)
-- [ ] T038 [US2] Render "Similar opportunities" with `Reveal` stagger on listing detail + dashboard in `src/components/features/similar-opportunities.tsx`
+- [x] T029 [P] [US2] Create auth pages in `src/app/(auth)/login` and `/register` (email/password, confirmation + reset via Supabase Auth, error/loading states, post-login redirect back to originating listing)
+- [x] T030 [P] [US2] Create profile row on signup (trigger on `auth.users`) and profile type in `src/lib/db/profiles.ts`
+- [x] T031 [US2] Implement save/unsave server action in `src/lib/db/saved.ts` (upsert, unique per user+opportunity)
+- [x] T032 [US2] Implement mark-applied server action in `src/lib/db/applied.ts` (idempotent upsert)
+- [x] T033 [US2] Create dashboard layout in `src/app/(dashboard)/layout.tsx` with sidebar nav (saved, applied, settings) + auth guard
+- [x] T034 [US2] Create saved page in `src/app/(dashboard)/saved/page.tsx` (list, unsave, closed/deleted states, empty state)
+- [x] T035 [US2] Create applied page in `src/app/(dashboard)/applied/page.tsx` (list, status, empty state)
+- [x] T036 [US2] Create settings page in `src/app/(dashboard)/settings/page.tsx` (profile edit + notification settings incl. full email opt-out)
+- [x] T037 [US2] Implement recommendations query in `src/lib/db/recommendations.ts` (rule-based: interests/saved type + country, published only, exclude saved/applied, ≤6, 2s)
+- [x] T038 [US2] Render "Similar opportunities" with `Reveal` stagger on listing detail + dashboard in `src/components/features/similar-opportunities.tsx`
 
 **Checkpoint**: At this point, User Stories 1 AND 2 should both work independently
 
@@ -123,12 +123,12 @@
 
 ### Implementation for User Story 3
 
-- [ ] T039 [P] [US3] Create blog list page in `src/app/(public)/blog/page.tsx` (category filter, `ArticleCard` grid, skeleton, empty state)
-- [ ] T040 [P] [US3] Create `ArticleCard` in `src/components/features/article-card.tsx` (`next/image` featured image, category badge, author, date)
-- [ ] T041 [US3] Create article detail page in `src/app/(public)/blog/[slug]/page.tsx` (content, author, category, related posts from `related_posts`)
-- [ ] T042 [US3] Create `RelatedPosts` in `src/components/features/related-posts.tsx` + add scroll-reveal to blog pages
-- [ ] T043 [US3] Add SEO metadata per article (title, description, `seo_keywords`, featured image, OpenGraph)
-- [ ] T044 [US3] Wire "Success stories" (blog category) into home page section with images and `Reveal` stagger
+- [x] T039 [P] [US3] Create blog list page in `src/app/(public)/blog/page.tsx` (category filter, `ArticleCard` grid, skeleton, empty state)
+- [x] T040 [P] [US3] Create `ArticleCard` in `src/components/features/article-card.tsx` (`next/image` featured image, category badge, author, date)
+- [x] T041 [US3] Create article detail page in `src/app/(public)/blog/[slug]/page.tsx` (content, author, category, related posts from `related_posts`)
+- [x] T042 [US3] Create `RelatedPosts` in `src/components/features/related-posts.tsx` + add scroll-reveal to blog pages
+- [x] T043 [US3] Add SEO metadata per article (title, description, `seo_keywords`, featured image, OpenGraph)
+- [x] T044 [US3] Wire "Success stories" (blog category) into home page section with images and `Reveal` stagger
 
 **Checkpoint**: At this point, User Stories 1, 2 AND 3 should all work independently
 
@@ -142,16 +142,16 @@
 
 ### Implementation for User Story 4
 
-- [ ] T045 [P] [US4] Create admin layout in `src/app/admin/layout.tsx` with admin guard + sidebar (listings, blog, users, analytics, email)
-- [ ] T046 [P] [US4] Create admin listings CRUD in `src/app/admin/listings/` (create/edit form per type, draft→publish, delete, duplicate warning on title+type+source)
-- [ ] T047 [US4] Create approval queue in `src/app/admin/approvals/` for pending `submissions` (approve blocked with gap list if required fields/source_url missing; sets `verified_by`/`verified_at`; reject → draft)
-- [ ] T048 [US4] Create admin blog CRUD in `src/app/admin/blog/` (create/edit/delete articles, publish/archive)
-- [ ] T049 [US4] Create user management page in `src/app/admin/users/` (list, search, role change, suspend)
-- [ ] T050 [US4] Create analytics page in `src/app/admin/analytics/` (aggregate: listings by type, views, searches, saves, signups — no PII)
-- [ ] T051 [US4] Implement user submission flow: registered users submit listings → `pending` (invisible publicly) in `src/lib/db/submissions.ts`
-- [ ] T052 [US4] Implement email sending in `src/lib/email/` (Resend free tier, quota guard ~100/day, opt-out honored) + `POST /api/email/send` for scheduled reminders/digests
-- [ ] T053 [US4] Create email broadcast page in `src/app/admin/email/` (newsletter to active subscribers, batched within free quota)
-- [ ] T054 [US4] Add Supabase Storage upload for featured/blog images in `src/lib/storage.ts` (public bucket, image validation)
+- [x] T045 [P] [US4] Create admin layout in `src/app/admin/layout.tsx` with admin guard + sidebar (listings, blog, users, analytics, email)
+- [x] T046 [P] [US4] Create admin listings CRUD in `src/app/admin/listings/` (create/edit form per type, draft→publish, delete, duplicate warning on title+type+source)
+- [x] T047 [US4] Create approval queue in `src/app/admin/approvals/` for pending `submissions` (approve blocked with gap list if required fields/source_url missing; sets `verified_by`/`verified_at`; reject → draft)
+- [x] T048 [US4] Create admin blog CRUD in `src/app/admin/blog/` (create/edit/delete articles, publish/archive)
+- [x] T049 [US4] Create user management page in `src/app/admin/users/` (list, search, role change, suspend)
+- [x] T050 [US4] Create analytics page in `src/app/admin/analytics/` (aggregate: listings by type, views, searches, saves, signups — no PII)
+- [x] T051 [US4] Implement user submission flow: registered users submit listings → `pending` (invisible publicly) in `src/lib/db/submissions.ts`
+- [x] T052 [US4] Implement email sending in `src/lib/email/` (Google SMTP via Nodemailer, quota guard ~400/day, opt-out honored) + `POST /api/email/send` for scheduled reminders/digests
+- [x] T053 [US4] Create email broadcast page in `src/app/admin/email/` (newsletter to active subscribers, batched within free quota)
+- [x] T054 [US4] Add Supabase Storage upload for featured/blog images in `src/lib/storage.ts` (public bucket, image validation)
 
 **Checkpoint**: All user stories should now be independently functional
 
@@ -161,7 +161,7 @@
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] T055 Run `npm run typecheck`, `npm run lint`, `npm test`, and `npm run build` — all MUST pass (constitution quality gate)
+- [x] T055 Run `npm run typecheck`, `npm run lint`, `npm test`, and `npm run build` — all MUST pass (constitution quality gate)
 - [ ] T056 Accessibility audit: WCAG AA contrast (buttons, forms, links), reduced-motion collapse, keyboard nav, form labels above inputs, focus rings in `src/app`
 - [ ] T057 Performance pass: LCP < 2.5s (hero `next/image` priority), CLS < 0.1 (reserved image space), lazy-load below-fold motion/images, Lighthouse run
 - [ ] T058 Verify light + dark mode across every page; confirm single accent color + one corner-radius scale; no pure `#000`/`#fff`
